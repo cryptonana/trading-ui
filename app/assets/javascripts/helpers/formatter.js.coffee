@@ -1,6 +1,8 @@
 class Formatter
   round: (str, fixed) ->
     BigNumber(str).round(fixed, BigNumber.ROUND_HALF_UP).toF(fixed)
+  round_his: (str, fixed) ->
+    BigNumber(str).round(fixed, BigNumber.ROUND_HALF_UP).toF(4)
 
   fix: (type, str) ->
     str = '0' unless $.isNumeric(str)
@@ -8,6 +10,16 @@ class Formatter
       @.round(str, gon.market.ask_precision)
     else if type is 'bid'
       @.round(str, gon.market.bid_precision)
+
+  fix_his: (type, str) ->
+    str = '0' unless $.isNumeric(str)
+    if type is 'ask'
+      @.round_his(str, gon.market.ask_precision)
+    else if type is 'bid'
+      @.round_his(str, gon.market.bid_precision)
+
+  fixAsk_his: (str) ->
+    @.fix_his('ask', str)
 
   fixAsk: (str) ->
     @.fix('ask', str)
@@ -59,7 +71,7 @@ class Formatter
     "#{m.format("MM/DD HH:mm")}"
 
   mask_price: (price) ->
-    price.replace(/\..*/, "<g>$&</g>")
+    price.replace(/0000/gi, "<g>$&</g>")
 
   mask_fixed_price: (price) ->
     @mask_price @fixPriceGroup(price)
@@ -84,7 +96,10 @@ class Formatter
     "#{m.format("YYYY/MM/DD HH:mm")}"
 
   mask_fixed_volume: (volume) ->
-    @.fixAsk(volume).replace(/\..*/, "<g>$&</g>")
+    @.fixAsk_his(volume).replace(/0000/gi, "<g>$&</g>")
+
+  his_fixed_volume: (volume) ->
+    @.fixAsk_his(volume).replace(/00/gi, "<g>$&</g>")
 
   fix_ask: (volume) ->
     @.fixAsk volume
@@ -94,7 +109,7 @@ class Formatter
 
   amount: (amount, price) ->
     val = (new BigNumber(amount)).times(new BigNumber(price))
-    @.fixAsk(val).replace(/\..*/, "<g>$&</g>")
+    @.fixAsk(val).replace(/0000/gi, "<g>$&</g>")
 
   trend: (type) ->
     if @.check_trend(type)

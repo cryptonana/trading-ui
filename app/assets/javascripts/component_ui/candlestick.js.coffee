@@ -27,18 +27,18 @@ RANGE_DEFAULT =
     color: '#333',
   states:
     hover:
-      fill: '#000',
+      fill: '#212835',
       style:
         color: '#ccc'
     select:
-      fill: '#000',
+      fill: '#212835',
       style:
         color: '#eee'
 
 COLOR_ON =
   candlestick:
     color: '#990f0f'
-    upColor: '#000000'
+    upColor: '#212835'
     lineColor: '#cc1414'
     upLineColor: '#49c043'
   close:
@@ -47,12 +47,12 @@ COLOR_ON =
 # The trick is use invalid color code to make the line transparent
 COLOR_OFF =
   candlestick:
-    color: 'invalid'
-    upColor: 'invalid'
-    lineColor: 'invalid'
-    upLineColor: 'invalid'
+    color: 'rgba(0,0,0,0)'
+    upColor: 'rgba(0,0,0,0)'
+    lineColor: 'rgba(0,0,0,0)'
+    upLineColor: 'rgba(0,0,0,0)'
   close:
-    color: 'invalid'
+    color: 'rgba(0,0,0,0)'
 
 COLOR = {
   candlestick: _.extend({}, COLOR_OFF.candlestick),
@@ -189,7 +189,7 @@ INDICATOR = {MA: false, EMA: false}
           turboThreshold: 0
           followPointer: true
           color: '#990f0f'
-          upColor: '#000000'
+          upColor: '#212835'
           lineColor: '#cc1414'
           upLineColor: '#49c043'
           dataGrouping: dataGrouping
@@ -208,9 +208,9 @@ INDICATOR = {MA: false, EMA: false}
 
       scrollbar:
         buttonArrowColor: '#333'
-        barBackgroundColor: '#202020'
-        buttonBackgroundColor: '#202020'
-        trackBackgroundColor: '#202020'
+        barBackgroundColor: '#0000004f'
+        buttonBackgroundColor: '#0000004f'
+        trackBackgroundColor: '#0000004f'
         barBorderColor: '#2a2a2a'
         buttonBorderColor: '#2a2a2a'
         trackBorderColor: '#2a2a2a'
@@ -219,8 +219,8 @@ INDICATOR = {MA: false, EMA: false}
         enabled: false
 
       navigator:
-        maskFill: 'rgba(32, 32, 32, 0.6)'
-        outlineColor: '#333'
+        maskFill: 'rgba(123, 123, 123, 0.26)'
+        outlineColor: '#636363'
         outlineWidth: 1
         xAxis:
           dateTimeLabelFormats: DATETIME_LABEL_FORMAT
@@ -230,6 +230,12 @@ INDICATOR = {MA: false, EMA: false}
         dateTimeLabelFormats: DATETIME_LABEL_FORMAT
         lineColor: '#333'
         tickColor: '#333'
+        labels:
+            enabled: true
+            style:
+              color: '#9a9a9a'
+              fill: '#9a9a9a'
+              stroke: '#9a9a9a'
         tickWidth: 2
         range: range
         events:
@@ -246,7 +252,11 @@ INDICATOR = {MA: false, EMA: false}
             x: 2
             y: 3
             zIndex: -7
-          gridLineColor: '#222'
+            style:
+              color: '#9a9a9a'
+              fill: '#9a9a9a'
+              stroke: '#9a9a9a'
+          gridLineColor: '#9a9a9a'
           gridLineDashStyle: 'ShortDot'
           top: "0%"
           height: "70%"
@@ -257,14 +267,14 @@ INDICATOR = {MA: false, EMA: false}
           labels:
             enabled: false
           top: "70%"
-          gridLineColor: '#000'
+          gridLineColor: '#212835'
           height: "15%"
         }
         {
           labels:
             enabled: false
           top: "85%"
-          gridLineColor: '#000'
+          gridLineColor: '#212835'
           height: "15%"
         }
       ]
@@ -274,7 +284,7 @@ INDICATOR = {MA: false, EMA: false}
           id: 'candlestick'
           name: gon.i18n.chart.candlestick
           type: "candlestick"
-          data: data['candlestick']
+          data: @formatCandlestickData data['candlestick']
           showInLegend: false
         }, COLOR['candlestick']),
         _.extend({
@@ -377,12 +387,18 @@ INDICATOR = {MA: false, EMA: false}
           yAxis: 2,
           showInLegend: true,
           type: 'histogram'
-          color: '#990f0f'
+          color: '#ff7676'
         }
       ]
 
   @formatPointArray = (point) ->
-    x: point[0], open: point[1], high: point[2], low: point[3], close: point[4]
+    x: point[0], open: point[1], high: point[2], low: point[3], close: point[4], y: point[4]
+
+  @formatCandlestickData = (data) ->
+    formatedData = []
+    for d in data
+      formatedData.push({x: d[0], open: d[1], high: d[2], low: d[3], close: d[4], y: d[4]})
+    formatedData
 
   @createPointOnSeries = (chart, i, px, point) ->
     chart.series[i].addPoint(point, true, true)
@@ -422,10 +438,13 @@ INDICATOR = {MA: false, EMA: false}
   @updateByTrades = (event, data) ->
     chart = @$node.find('#candlestick_chart').highcharts()
 
-    if @liveRange(chart)
-      @process(chart, data)
+    if chart.series[0].points.length > 0
+      if @liveRange(chart)
+        @process(chart, data)
+      else
+        @running = false
     else
-      @running = false
+      @trigger "switch::range_switch::init" # reintialize chart when having no data
 
   @liveRange = (chart) ->
     p1 = chart.series[0].points[ chart.series[0].points.length-1 ].x

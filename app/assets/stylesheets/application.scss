@@ -13,8 +13,9 @@
 @import 'font-awesome';
 @import 'csshake.min';
 
-@import 'layouts/basic';
+
 @import 'layouts/positions';
+@import 'layouts/basic';
 
 /* basic layout
 ------------------------------------------------ */
@@ -25,6 +26,22 @@ body,
 .content {
   height: 100%;
   @include user-select(none);
+}
+
+.table tr:hover {
+  cursor: pointer;
+}
+
+.panel-fixed {
+    padding: 0px 15px 0px 15px;
+}
+
+.panel-fixed-head {
+    padding: 8px 6px 8px 16px;
+}
+
+.panel-fixed-head-his {
+    padding: 6px 15px 8px 6px;
 }
 
 body {
@@ -213,12 +230,15 @@ header {
   min-width: $min-width;
 }
 .navbar-default .navbar-brand {
-  color: $text-color;
+  color: $main-gray;
 }
 .navbar-default .navbar-text {
   color: $text-color;
   span {
     color: $dark-gray;
+    span {
+      color: $main-gray;
+    }
   }
 }
 
@@ -519,6 +539,16 @@ header {
     outline-offset: -2px;
   }
 
+  .btn {
+    background-color: $second-color;
+    border-color: $second-color;
+  }
+
+  .btn:hover{
+    background-color: $main-bg;
+    border-color: $second-bg;
+  }
+
   .row { margin-bottom: 6px; }
 
   .input-group {
@@ -528,20 +558,21 @@ header {
     }
     .form-control {
       border-color: $border-color;
+      color: $text-color;
     }
 
     label.input-group-addon {
       padding: 3px 6px 0px 6px;
       min-width: 70px;
       text-align: right;
-      color: $text-color;
+      color: $main-gray;
     }
 
     span.input-group-addon {
       padding: 3px 6px 0px 6px;
       min-width: 40px;
       text-align: left;
-      color: $text-color;
+      color: $main-gray;
     }
 
     input {
@@ -563,10 +594,10 @@ header {
     z-index: 10;
   }
 
-  .label { font-size: inherit; }
+  .label { font-size: inherit; color: $brand-danger;}
   .label.label-info { color: $brand-info }
   .label.label-success { color: $brand-success }
-  .label.label-danger { color: $brand-danger }
+  .label.label-danger { color: $brand-danger; background-color: transparent; }
 
   span.status-info, .status-success, .status-danger {
     top: -3px;
@@ -580,15 +611,15 @@ header {
     margin-top: 18px;
     margin-bottom: 13px;
 
-    .current-balance { font-family: $font-family-monospace; }
-    .unit { padding-left: 3px; }
+    .current-balance { font-family: $font-family-monospace; color: $main-gray; }
+    .unit { padding-left: 3px; color: $main-gray; }
   }
 }
 
 /* order-book trades my-orders table
 ---------------------------------------------------*/
-.col-left { padding-right: 12px; }
-.panel-body-head { border-bottom: 1px solid $border-color; }
+.col-left { padding-right: 10px; }
+.panel-body-head { background: $border-color; }
 
 #ticker, #order_book, #market_trades, #my_orders, #market_list {
   table {
@@ -638,14 +669,23 @@ table {
   }
 }
 
+.panel-chart {
+  margin-bottom: 20px;
+  background-color: #212835;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
 .chart-ticker {
-  color: #777;
-  background-color: $panel-bg-alpha;
-  border: 1px solid $navbar-default-border;
+  color: #c3c3c3;
+  background-color: rgba(88, 88, 88, 0.51);
+  border: 1px solid rgba(177, 177, 177, 0.05);
   padding: 6px 0 6px 6px;
   font-size: 11px;
 
-  & > div { display: inline-block; width: 70px; }
+  & > div { display: inline-block; }
   & > div.tooltip-ma { width: 76; margin-top: 3px; }
   & > div.tooltip-ticker { margin-top: 5px; }
 
@@ -656,14 +696,15 @@ table {
 
   span.t-title {
     display: block;
-    text-align: rigth;
+    text-align: right;
   }
 
   span.t-value {
     color: $text-color !important;
     font-family: $font-family-monospace;
     text-align: right;
-    margin-right: 15px;
+    margin-left: 5px;
+    font-size: 10px;
   }
 }
 
@@ -673,4 +714,15 @@ table {
 
 .panel-width {
   width: 100%
+}
+.text-center {
+  text-align:center !important;
+}
+
+.text-left {
+  text-align:left !important;
+}
+
+.text-right {
+  text-align:right !important;
 }

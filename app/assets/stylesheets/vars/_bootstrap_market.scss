@@ -2,16 +2,16 @@
 // COLORS DEFINITIONS
 // -------------------------------------------------------------
 $main-color: #777;
-$second-color: #333;
-$neutral-color: #333;
+$second-color: rgba(255, 255, 255, 0.05);
+$neutral-color: rgba(255, 255, 255, 0.05);
 
 $green-color: rgb(77, 215, 16);
 $red-color: rgb(208, 0, 23);
 
-$main-bg: #151515;
-$second-bg: #000;
+$main-bg: #252b38;
+$second-bg: #101721;
 
-$main-gray: #ccc;
+$main-gray: rgba(255, 255, 255, 0.9);
 $dark-gray: #777;
 $black-color: #070707;
 
@@ -58,7 +58,7 @@ $panel-bg: $main-bg;
 $panel-bg-alpha: rgba($main-bg,0.8);
 $panel-default-heading-bg: $neutral-color;
 $panel-default-border: $neutral-color;
-$panel-border-radius: 2px;
+$panel-border-radius: 0px;
 $panel-body-padding: 8px 8px 8px 8px;
 $panel-heading-padding: 2px 8px 0px 8px;
 $panel-default-text: $text-color;

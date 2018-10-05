@@ -18,7 +18,7 @@
 
     .last {
       padding-top: 5px;
-      font-size: 34px;
+      font-size: 25px;
       line-height: 34px;
     }
   }
@@ -27,6 +27,7 @@
     width: $order-book-width; height: $order-book-height;
     min-height: $order-book-height;
     top: $gutter; left: $gutter;
+    font-size: 12px;
 
     .panel-body-content {
       min-height: $order-book-height - $panel_table_header_high;
@@ -42,6 +43,9 @@
         color: #444;
         .price, .amount, .volume, g { color: #444; }
       }
+
+      .price, .amount, .volume { color: $main-gray; }
+
     }
   }
 
@@ -70,7 +74,7 @@
   }
 
   #depths_wrapper {
-    width: $order-book-width; height: $depths-height;
+    width: 433px; height: $depths-height;
     bottom: $gutter-3x + $my-orders-height + $entry-height; left: $gutter;
 
     .panel-body {
@@ -94,15 +98,15 @@
   }
 
   #market_trades {
-    position: absolute;
     bottom: $gutter; right: $gutter;
-    width: $market-trades-width;
+    width: 100%;
     height: $market-trades-height;
     min-height: $market-trades-height;
     z-index: 999;
+    font-size: 12px;
 
     .panel {
-      width: $market-trades-width;
+      width: 100%;
       height: $market-trades-height;
       min-height: $market-trades-height;
     }
@@ -176,7 +180,7 @@
       height: $my-orders-height - $gutter-2x;
 
       .time, .price, .volume, .amount {
-        & > span { display: block; height: 16px; padding: 2px 0; }
+        & > span { display: block; height: 16px; padding: 2px 0; color: $main-gray; }
       }
 
       .empty-row {
@@ -210,7 +214,7 @@
 
   #ticker {
     width: $ticker-width; height: $ticker-height;
-    bottom: $gutter_4x + $entry-height + $my-orders-height + $depths-height; right: $gutter;
+    bottom: $gutter_4x + $entry-height + $my-orders-height - 1; right: $gutter;
 
     .ask, .last, .bid {
       text-align: center;
@@ -220,7 +224,7 @@
 
     .last {
       padding-top: 5px;
-      font-size: 34px;
+      font-size: 25px;
       line-height: 34px;
     }
   }
@@ -229,6 +233,11 @@
     width: $order-book-width; height: $order-book-height;
     min-height: $order-book-height;
     top: $gutter; right: $gutter;
+    font-size: 12px;
+
+    #order_book_header table th{
+      padding: 0 2px 0 0;
+    }
 
     .panel-body-content {
       min-height: $order-book-height - $panel_table_header_high;
@@ -244,6 +253,15 @@
         color: #444;
         .price, .amount, .volume, g { color: #444; }
       }
+
+      .price, .amount, .volume { color: $main-gray; padding: 0 2px 0 0;}
+
+      tr {
+        &.text-up, &.text-down {
+          td { color: inherit }
+        }
+      }
+
     }
   }
 
@@ -251,7 +269,7 @@
     position: absolute;
     min-width: $candlestick-width; width: $candlestick-width;
     min-height: $candlestick-height; height: $candlestick-height;
-    top: $gutter; left: $market-list-width + $gutter-2x;
+    top: $gutter; left: $gutter-2x;
   }
 
   .switch {
@@ -272,8 +290,8 @@
   }
 
   #depths_wrapper {
-    width: $order-book-width; height: $depths-height;
-    bottom: $gutter-3x + $my-orders-height + $entry-height; right: $gutter;
+    width: 20%;
+    bottom: 0px; left: $gutter;
 
     .panel-body {
       padding: 0;
@@ -296,12 +314,12 @@
   }
 
   #market_trades {
-    position: absolute;
     bottom: $gutter; left: $gutter;
-    width: $market-trades-width;
+    width: 100%;
     height: $market-trades-height;
     min-height: $market-trades-height;
     z-index: 999;
+    font-size: 12px;
 
     .panel {
       width: $market-trades-width;
@@ -321,6 +339,7 @@
 
     .all-trades tr td.my i { display: none; }
     .all-trades tr.mine td.my i { display: inline; }
+    .all-trades, .my-trades tr td { color: $main-gray; }
 
     .my-trades tbody {
       display: none;
@@ -378,6 +397,7 @@
       height: $my-orders-height - $gutter-2x;
 
       .time, .price, .volume, .amount {
+        color: $main-gray;
         & > span { display: block; height: 16px; padding: 2px 0; }
       }
 
